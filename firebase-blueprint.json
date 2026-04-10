@@ -1,0 +1,60 @@
+{
+  "entities": {
+    "Ticket": {
+      "title": "Support Ticket",
+      "description": "A support request from a customer.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "description": "Customer name" },
+        "phone": { "type": "string", "description": "Customer phone number" },
+        "issue": { "type": "string", "description": "Description of the issue" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "When the ticket was created" },
+        "status": { "type": "string", "enum": ["open", "closed"], "description": "Current status of the ticket" }
+      },
+      "required": ["name", "phone", "issue", "createdAt", "status"]
+    },
+    "User": {
+      "title": "User Profile",
+      "description": "Public and private user profile information.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Firebase Auth UID" },
+        "email": { "type": "string", "description": "User email" },
+        "displayName": { "type": "string", "description": "Full name" },
+        "phone": { "type": "string", "description": "User phone number" },
+        "address": { "type": "string", "description": "User address" },
+        "role": { "type": "string", "enum": ["user", "admin"], "description": "User role" },
+        "onboarded": { "type": "boolean", "description": "Whether the user has completed onboarding" }
+      },
+      "required": ["uid", "email", "role"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Customer order information.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "UID of the customer" },
+        "items": { "type": "array", "description": "List of ordered items" },
+        "total": { "type": "number", "description": "Total order amount" },
+        "status": { "type": "string", "enum": ["pending", "processing", "shipped", "delivered"], "description": "Order status" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Order timestamp" },
+        "shippingAddress": { "type": "string", "description": "Delivery address" }
+      },
+      "required": ["userId", "items", "total", "status", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/tickets/{ticketId}": {
+      "schema": "Ticket",
+      "description": "Collection of support tickets."
+    },
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profile documents."
+    },
+    "/orders/{orderId}": {
+      "schema": "Order",
+      "description": "Customer orders collection."
+    }
+  }
+}
